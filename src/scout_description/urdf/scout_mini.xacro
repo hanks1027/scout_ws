@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+
+<robot name="scout_mini"
+    xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:arg name="robot_namespace" default="/" />
+    <xacro:arg name="urdf_extras" default="empty.urdf" />
+
+    <xacro:include filename="$(find scout_description)/urdf/scout_mini_wheel_1.xacro" />
+    <xacro:include filename="$(find scout_description)/urdf/scout_mini_wheel_2.xacro" />
+    <xacro:include filename="$(find scout_description)/urdf/scout_mini_wheel_3.xacro" />
+    <xacro:include filename="$(find scout_description)/urdf/scout_mini_wheel_4.xacro" />
+
+    <!-- Variables -->
+    <xacro:property name="M_PI" value="3.14159"/>
+
+    <!-- Vehicle Geometries -->
+    <xacro:property name="base_x_size" value="0.6200000" />
+    <xacro:property name="base_y_size" value="0.585000" />
+    <xacro:property name="base_z_size" value="0.235000" />
+
+    <xacro:property name="wheelbase" value="0.451"/> 
+   <xacro:property name="track" value="0.4" />
+   <xacro:property name="wheel_vertical_offset" value="0" />
+    <xacro:property name="wheel_diameter" value="0.16" />
+    <xacro:property name="wheel_width" value="0.084" />
+
+<!--    <xacro:property name="track" value="0.3426" />
+    <xacro:property name="wheelbase" value="0.3181"/>
+    <xacro:property name="wheel_vertical_offset" value="-0.160000047342231" />-->
+
+    <xacro:property name="wheel_length" value="0.8e-01" />
+    <xacro:property name="wheel_radius" value="1.600e-01" />
+    
+    <link name="base_footprint"/>
+    <!-- Base link -->
+    <link name="base_link">
+        <visual>
+            <!--origin xyz="-0.0145261552504705 0.0231316650320557 0.00586280190939592" rpy="0 0 0" /-->
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <material name="white">
+                <color rgba="1 1 1 1" />
+            </material>
+            <!--<origin
+              xyz="-0.0145261552504705 0.0231316650320557 0.00586280190939592"
+              rpy="0 0 0" />-->
+            <geometry>
+                <mesh filename="package://scout_description/meshes/scout_mini_base.STL" />
+            </geometry>
+        </visual>
+        <collision>
+          <!--origin
+            xyz="-0.0145261552504705 0.0231316650320557 0.00586280190939592"
+            rpy="0 0 0" /-->
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+          <geometry>
+            <mesh
+              filename="package://scout_description/meshes/scout_mini_base.STL" />
+          </geometry>
+        </collision>
+    </link>
+
+    <!-- <joint name="chassis_link_joint" type="fixed">
+        <origin xyz="0 0 ${wheel_radius - wheel_vertical_offset}" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="chassis_link" />
+    </joint> -->
+
+    <link name="inertial_link">
+        <inertial>
+            <!--mass value="44.3898489950015" /-->
+            <mass value="132.3898489950015" />
+            <!-- <mass value="50" /> -->
+            <!-- <origin xyz="-0.00065 -0.085 0.062" />
+            <inertia ixx="0.6022" ixy="-0.02364" ixz="-0.1197" iyy="1.7386" iyz="-0.001544" izz="2.0296" /> -->
+            <origin xyz="0 0 0" />
+            <!--<origin
+              xyz="-0.0145261552504705 0.0231316650320557 0.00586280190939592"
+              rpy="0 0 0" />-->
+            <inertia ixx="0.185196122711036"
+            ixy="4.30144213829512E-08"
+            ixz="5.81037523686401E-08"
+            iyy="0.364893736238929"
+            iyz="-0.000386720198091934"
+            izz="0.223868521722778" />
+            <!--<inertia ixx="2.288641" ixy="0" ixz="0" iyy="5.103976" iyz="0" izz="3.431465" />-->
+        </inertial>
+    </link>
+
+    <joint name="inertial_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="inertial_link" />
+    </joint>
+
+
+    <joint name="base_joint" type="fixed">
+        <origin xyz="0 0 0.08" rpy="0 0 0" />
+        <parent link="base_footprint" />
+        <child link="base_link" />
+    </joint>
+
+
+
+    <!-- For testing, hang the robot up in the air -->
+    <!-- <link name="world" />
+    <joint name="world_to_base_link=" type="fixed">
+        <origin xyz="0 0 0.5" rpy="0 0 0" />
+        <parent link="world"/>
+        <child link="base_link"/>
+    </joint> -->
+
+    <!-- Scout wheel macros -->
+    <!-- wheel labeled from 0 to 3, conter-clockwise, starting from front right wheel -->
+    <!-- motor 1 and 2 (left side) are mechanically installed in a reversed direction -->
+    <xacro:scout_mini_wheel_1 wheel_prefix="front_left" wheel_diameter="${wheel_diameter}" wheel_width="${wheel_width}">
+    <!--<origin
+            xyz="0 0 0"
+            rpy="0 0 0" />-->
+        <origin xyz="${wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="-1.57 0 0" />
+    </xacro:scout_mini_wheel_1>
+    <xacro:scout_mini_wheel_2 wheel_prefix="rear_left" wheel_diameter="${wheel_diameter}" wheel_width="${wheel_width}">
+    <!--<origin
+            xyz="0 0 0"
+            rpy="0 0 0" />-->
+        <origin xyz="${-wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="-1.57 0 0" />
+    </xacro:scout_mini_wheel_2>
+    <xacro:scout_mini_wheel_3 wheel_prefix="front_right" wheel_diameter="${wheel_diameter}" wheel_width="${wheel_width}">
+    <!--<origin
+            xyz="0 0 0"
+            rpy="0 0 0" />-->
+        <origin xyz="${wheelbase/2} ${-track/2} ${wheel_vertical_offset+0.001}" rpy="1.57 0 0" />
+    </xacro:scout_mini_wheel_3>
+    <xacro:scout_mini_wheel_4 wheel_prefix="rear_right" wheel_diameter="${wheel_diameter}" wheel_width="${wheel_width}">
+    <!--<origin
+           xyz="0 0 0"
+           rpy="0 0 0" />-->
+        <origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset+0.001}" rpy="1.57 0 0" />
+    </xacro:scout_mini_wheel_4>
+    <!-- Additional definitions -->
+    <xacro:include filename="$(arg urdf_extras)" />
+
+    <!-- Gazebo definitions  -->
+    <!-- <xacro:include filename="$(find scout_description)/urdf/scout_mini.gazebo" /> -->
+    <gazebo>
+        <plugin
+            filename="gz-sim-diff-drive-system"
+            name="gz::sim::systems::DiffDrive">
+        <!-- 轮子关节名称 (需与你的 URDF 中的 joint 名一致) -->
+            <left_joint>front_left_wheel</left_joint>
+            <left_joint>rear_left_wheel</left_joint>
+            <right_joint>front_right_wheel</right_joint>
+            <right_joint>rear_right_wheel</right_joint>
+
+            <!-- 轮距与轮径 -->
+            <wheel_separation>0.451</wheel_separation>
+            <wheel_radius>0.16</wheel_radius>
+
+            <!-- 话题配置 -->
+            <topic>/cmd_vel</topic>
+            <odom_topic>/odom</odom_topic>
+            <frame_id>odom</frame_id>
+            <child_frame_id>base_footprint</child_frame_id>
+        </plugin> 
+    </gazebo>
+
+    <gazebo>
+        <plugin
+            filename="gz-sim-joint-state-publisher-system"
+            name="gz::sim::systems::JointStatePublisher">
+        <!-- 轮子关节名称 (需与你的 URDF 中的 joint 名一致) -->
+            <left_joint>front_left_wheel</left_joint>
+            <left_joint>rear_left_wheel</left_joint>
+            <right_joint>front_right_wheel</right_joint>
+            <right_joint>rear_right_wheel</right_joint>
+        </plugin> 
+    </gazebo>
+
+
+</robot>

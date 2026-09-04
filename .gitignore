@@ -1,0 +1,12 @@
+# 忽略 VS Code 配置及数据库缓存
+.vscode/
+**/.vscode/
+*.db
+*.db-wal
+*.db-shm
+
+# 忽略 ROS/ROS2 编译临时文件夹
+build/
+devel/
+install/
+log/

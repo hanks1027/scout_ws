@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<robot name="scout_mini"
+    xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:include filename="common_properties.xacro" />
+    <xacro:include filename="chassis.xacro" />
+    <xacro:include filename="exp_in_sim.xacro" />
+
+
+</robot>

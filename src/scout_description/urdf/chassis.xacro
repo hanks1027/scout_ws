@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- Vehicle Geometries -->
+    <xacro:property name="base_x_size" value="0.6200000" />
+    <xacro:property name="base_y_size" value="0.585000" />
+    <xacro:property name="base_z_size" value="0.245000" />
+
+    <xacro:property name="wheelbase" value="0.451"/> 
+    <xacro:property name="track" value="0.4" />
+    <xacro:property name="wheel_vertical_offset" value="0" />
+    <xacro:property name="wheel_diameter" value="0.16" />
+    <xacro:property name="wheel_width" value="0.09" />
+
+    <link name="base_footprint"/>
+    <link name="base_link">
+        <inertial>
+            <origin
+                xyz="0.0 0.0 0.0"
+                rpy="0 0 0" />
+            <mass
+                value="10" />
+            <inertia ixx="0.1354" ixy="0" ixz="0"
+             iyy="0.1354" iyz="0" izz="0.2667"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0.0"/>
+            <material name="white"/>
+            <geometry>
+                <mesh filename="package://scout_description/meshes/scout_mini_base.STL"/>
+            </geometry>
+
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0.0"/>
+            <geometry>
+                <mesh filename="package://scout_description/meshes/scout_mini_base.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="inertial_link">
+        <inertial>
+        <mass value="60"/>
+        <origin xyz="0.0 0.0 0.0"/>
+        <inertia ixx="2.288641" ixy="0" ixz="0" iyy="5.103976" iyz="0" izz="3.431465"/>
+        </inertial>
+    </link>
+
+    <xacro:macro name="wheel_link" params="prefix">
+        <link name="${prefix}_wheel_link">
+
+            <inertial>
+                <mass value="3"/>
+                <origin xyz="0 0 0"/>
+                <inertia ixx="0.7171" ixy="0" ixz="0" iyy="0.7171" iyz="0" izz="0.1361"/>
+                <!-- ixx="0.006564" ixy="0" ixz="0" iyy="0.006564" iyz="0" izz="0.0096"/>-->
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://scout_description/meshes/wheel.dae"/>
+                </geometry>    
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <!-- xyz="0 0 0.03" rpy="0 0 0" -->
+                <geometry>
+                    <mesh filename="package://scout_description/meshes/wheel.dae"/>
+                    <!-- <cylinder radius="0.08" length="0.084"/> -->
+
+                </geometry>
+            </collision>
+
+        </link>
+    </xacro:macro>
+
+    <xacro:wheel_link prefix="front_left"/>
+    <xacro:wheel_link prefix="rear_left"/>
+    <xacro:wheel_link prefix="front_right"/>
+    <xacro:wheel_link prefix="rear_right"/>
+
+
+    <joint name="inertial_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="inertial_link"/>
+    </joint>
+
+    <joint name="base_joint" type="fixed">
+        <origin xyz="0 0 0.08" rpy="0 0 0" />
+        <parent link="base_footprint" />
+        <child link="base_link" />
+    </joint>
+
+    <joint name="front_left_wheel" type="continuous">
+        <parent link="base_link"/>
+        <child link="front_left_wheel_link"/>
+        <origin rpy="-${pi / 2.0} 0 0" xyz="${wheelbase / 2} ${track / 2} ${wheel_vertical_offset}"/>
+        <axis rpy="0 0 0" xyz="0 0 1"/>
+    </joint>
+
+    <joint name="rear_left_wheel" type="continuous">
+        <parent link="base_link"/>
+        <child link="rear_left_wheel_link"/>
+        <origin rpy="-1.57 0 0" xyz="-${wheelbase / 2} ${track / 2} ${wheel_vertical_offset}"/>
+        <axis rpy="0 0 0" xyz="0 0 1"/>
+    </joint>
+
+    <joint name="front_right_wheel" type="continuous">
+        <parent link="base_link"/>
+        <child link="front_right_wheel_link"/>
+        <origin rpy="${pi / 2.0} 0 0" xyz="${wheelbase / 2} -${track / 2} ${wheel_vertical_offset}"/>
+        <axis rpy="0 0 0" xyz="0 0 -1"/>
+    </joint>
+
+    <joint name="rear_right_wheel" type="continuous">
+        <parent link="base_link"/>
+        <child link="rear_right_wheel_link"/>
+        <origin rpy="${pi / 2.0} 0 0" xyz="-${wheelbase / 2} -${track / 2} ${wheel_vertical_offset}"/>
+        <axis rpy="0 0 0" xyz="0 0 -1"/>
+    </joint>
+
+</robot>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypeneds="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>scout_description</name>
+  <version>0.4.2</version>
+  <description>AgileX Scout Husky URDF description</description>
+
+  <author email="rgariepy@clearpathrobotics.com">Ryan Gariepy</author>
+  <author email="pmukherj@clearpathrobotics.com">Prasenjit Mukherjee</author>
+  <author email="mpurvis@clearpathrobotics.com">Mike Purvis</author>
+  <author email="paul@bovbel.com">Paul Bovbel</author>
+  <author email="dash@clearpathrobotics.com">Devon Ash</author>
+
+  <maintainer email="paul@bovbel.com">Paul Bovbel</maintainer>
+  <maintainer email="tbaltovski@clearpathrobotics.com">Tony Baltovski</maintainer>
+
+  <url type="website">http://ros.org/wiki/scout_description</url>
+  <url type="bugtracker">https://github.com/husky/husky/issues</url>
+  <url type="repository">https://github.com/husky/husky</url>
+
+  <license>BSD</license>
+
+  <!-- ROS 2 构建工具 -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- 运行时依赖项（替代 ROS 1 的 run_depend） -->
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>joint_state_publisher_gui</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>ros_gz_sim</exec_depend>
+  <exec_depend>ros_gz_bridge</exec_depend>  
+  <exec_depend>rviz2</exec_depend>
+  <exec_depend>urdf</exec_depend>
+  <exec_depend>xacro</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

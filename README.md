@@ -1,6 +1,6 @@
 # Scout Mini ROS 2 项目指南
 
-本项目包含了 Scout Mini 移动机器人的底层 CAN 总线配置、模型可视化、实机控制部署以及 Livox 雷达与 Gazebo 仿真的启动命令。
+本项目是基于 **ROS 2 Jazzy**（Ubuntu 24.04）开发的 **Scout Mini 移动机器人** 开源部署框架。项目整合了 Scout Mini 底盘驱动与 CAN 通信、机器人 URDF 模型可视化、Gazebo 仿真环境搭建，并深度适配了 **Livox Mid-360S** 激光雷达。同时，项目对 **FAST_LIO2** 3D LiDAR-IMU 紧耦合激光里程计与建图算法进行了 ROS 2 Jazzy 版本的编译适配与调优，提供了一套从硬件通信、实机遥控到高精度 3D SLAM 建图的一站式保姆级部署指南。 
 
 ---
 

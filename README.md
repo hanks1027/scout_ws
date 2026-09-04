@@ -55,6 +55,13 @@ ros2 launch scout_description gazebo.launch.py
 ## 发布速度
 ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.5, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
 
+## 6.fastlio2建图 (已兼容ROS2 jazzy&mid360s)
+分别在两个终端输入命令
+####  终端 1：启动mid360s节点
+ros2 launch livox_ros_driver2 msg_MID360s_launch.py 
+
+#### 终端 2：启动FASTLIO节点
+ros2 launch fast_lio mapping.launch.py 
 
 ---
 ### 💡 上传仓库命令：

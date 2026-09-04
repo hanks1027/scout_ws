@@ -1,0 +1,49 @@
+/**:
+    ros__parameters:
+        feature_extract_enable: false
+        point_filter_num: 3
+        max_iteration: 3
+        filter_size_surf: 0.4
+        filter_size_map: 0.4
+        cube_side_length: 1000.0
+        runtime_pos_log_enable: false
+        map_file_path: "./test.pcd"
+
+        common:
+            lid_topic:  "/livox/lidar"
+            imu_topic:  "/livox/imu"
+            time_sync_en: false         # 仅在外部硬件无法硬同步时开启
+            time_offset_lidar_to_imu: 0.0 # 雷达与 IMU 的时间偏差（秒）
+
+
+        preprocess:
+            lidar_type: 1                # 1 代表 Livox 系列激光雷达
+            scan_line:  4
+            blind: 0.2                   # Mid-360S 近距离盲区最小可达 0.1~0.2 米
+            timestamp_unit: 0            # 0 代表纳秒 (ns)，适配 livox_ros_driver2 默认输出
+            scan_rate: 10
+
+        mapping:
+            acc_cov: 0.01                # 加速度计协方差（根据 Mid-360S 高精度 IMU 优化）
+            gyr_cov: 0.01                # 陀螺仪协方差
+            b_acc_cov: 0.0001            # 加速度计零偏漂移
+            b_gyr_cov: 0.0001            # 陀螺仪零偏漂移
+            fov_degree:    360.0         # 视场角
+            det_range:     100.0         # 最远探测距离
+            extrinsic_est_en:  true      # 开启在线外参优化估计
+            extrinsic_T: [ -0.011, -0.02329, 0.04412 ]  # Mid-360S 内部物理相对平移
+            extrinsic_R: [ 1.0, 0.0, 0.0,
+                           0.0, 1.0, 0.0,
+                           0.0, 0.0, 1.0 ]
+
+        publish:
+            path_en: true                # 是否发布轨迹 Path
+            effect_map_en: false         # 是否发布特征点地图
+            map_en: true                 # 是否发布全局地图 /cloud_registered
+            scan_publish_en: true        # 是否发布单帧点云
+            dense_publish_en: false      # 是否降低发布点云密度以节省带宽
+            scan_bodyframe_pub_en: true  # 是否发布 IMU 车体坐标系下的点云
+
+        pcd_save:
+            pcd_save_en: true            # 是否保存 PCD 地图文件
+            interval: -1                 # -1 表示结束或退出时保存所有点云到单个文件

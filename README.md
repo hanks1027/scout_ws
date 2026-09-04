@@ -52,6 +52,13 @@ ros2 launch livox_ros_driver2 msg_MID360s_launch.py
 
 ## 🎮 5. Gazebo 仿真
 ros2 launch scout_description gazebo.launch.py
+## 发布速度
+ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.5, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
+
+
+---
+### 💡 上传仓库命令：
+git add . && git commit -m "日常代码与文档更新" && git push
 
 
 

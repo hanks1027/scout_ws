@@ -10,7 +10,7 @@ find_package(ament_cmake REQUIRED)
 
 # 安装 launch、meshes 和 urdf 文件夹到 ROS 2 包的 share 目录中
 install(
-  DIRECTORY launch meshes urdf rviz config
+  DIRECTORY launch meshes urdf rviz config worlds models
   DESTINATION share/${PROJECT_NAME}
 )
 

@@ -10,16 +10,31 @@ def generate_launch_description():
     pkg_scout_description = get_package_share_directory('scout_description')
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
 
-    # 1. 动态设置 GZ 资源路径
+    # 1. 动态设置 GZ 资源路径（自动检索源码 models 目录和系统原有路径）
     install_dir = os.path.dirname(pkg_scout_description)
+    models_dir = os.path.expanduser('~/scout_ws/src/scout_description/models')
+    existing_gz_path = os.environ.get('GZ_SIM_RESOURCE_PATH', '')
+    
+    gz_resource_paths = [install_dir, models_dir]
+    if existing_gz_path:
+        gz_resource_paths.append(existing_gz_path)
+        
     set_gz_resource_path = SetEnvironmentVariable(
         name='GZ_SIM_RESOURCE_PATH',
-        value=[install_dir]
+        value=':'.join(gz_resource_paths)
     )
+
+    # # # 1. 动态设置 GZ 资源路径
+    # install_dir = os.path.dirname(pkg_scout_description)
+    # set_gz_resource_path = SetEnvironmentVariable(
+    #     name='GZ_SIM_RESOURCE_PATH',
+    #     value=[install_dir]
+    # )
 
     # 2. XACRO 文件路径与解析
     xacro_file = os.path.join(pkg_scout_description, 'urdf', 'scout_mini.urdf.xacro')
     bridge_config_file = os.path.join(pkg_scout_description, 'config', 'gazebo_bridge.yaml')
+    world_file = os.path.join(pkg_scout_description, 'worlds', 'house.sdf.world')
 
     robot_description_config = xacro.process_file(xacro_file)
     robot_desc = robot_description_config.toxml()
@@ -28,12 +43,20 @@ def generate_launch_description():
     # 注意：请根据实际存放路径修改，假设在 scout_description/rviz/urdf_config.rviz
     rviz_config_file = os.path.join(pkg_scout_description, 'rviz', 'urdf_config.rviz')
 
-    # 4. 启动 Gazebo Sim
+    # # 4. 启动 Gazebo Sim
+    # gazebo = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(
+    #         os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')
+    #     ),
+    #     launch_arguments={'gz_args': '-r empty.sdf'}.items(),
+    # )
+
+    # 4. 启动 Gazebo Sim，加载 house.world
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')
         ),
-        launch_arguments={'gz_args': '-r empty.sdf'}.items(),
+        launch_arguments={'gz_args': f'-r {world_file}'}.items(),
     )
 
     # 5. 在 Gazebo 中生成模型
@@ -43,7 +66,9 @@ def generate_launch_description():
         arguments=[
             '-string', robot_desc,
             '-name', 'scout_mini',
-            '-z', '0.5'
+            '-x', '2.0',   # 避开中央密集家具
+            '-y', '0.0',
+            '-z', '1.0'    # 从 1 米高度落下
         ],
         output='screen'
     )
@@ -62,21 +87,9 @@ def generate_launch_description():
         name='joint_state_publisher_gui'
     )
 
-    # # 7. 发布关节状态（可选，解决 RViz 显示 TF 树缺失关节问题）
-    # joint_state_publisher = Node(
-    #     package='joint_state_publisher',
-    #     executable='joint_state_publisher',
-    #     output='screen'
-    # )
-
-    # # 8. 发布 TF 静态变换 (可选)
-    # static_tf = Node(
-    #     package='tf2_ros',
-    #     executable='static_transform_publisher',
-    #     arguments=['--frame-id', 'base_link', '--child-frame-id', 'base_footprint']
-    # )
 
     # 9. ROS 2 <-> Gazebo 桥接节点 (添加了 /joint_states 桥接，方便 RViz 同步关节状态)
+
     bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
@@ -102,9 +115,6 @@ def generate_launch_description():
         gazebo,
         spawn_entity,
         robot_state_publisher,
-        # joint_state_publisher_gui_node,
-        # joint_state_publisher,
-        # static_tf,
         bridge,
         rviz_node
     ])

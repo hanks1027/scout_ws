@@ -10,12 +10,21 @@ def generate_launch_description():
     pkg_scout_description = get_package_share_directory('scout_description')
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
 
+    try:
+            pkg_piper_description = get_package_share_directory('piper_description')
+            piper_install_dir = os.path.dirname(pkg_piper_description)
+    except Exception:
+            # 如果未找到该包的 install 目录，打个兜底策略直接指向 src 路径
+            piper_install_dir = os.path.expanduser('~/scout_ws/src')
+
     # 1. 动态设置 GZ 资源路径（自动检索源码 models 目录和系统原有路径）
     install_dir = os.path.dirname(pkg_scout_description)
     models_dir = os.path.expanduser('~/scout_ws/src/scout_description/models')
+    piper_src_dir = os.path.expanduser('~/scout_ws/src/piper_description')  # 【新增】包含 mesh 的源码路径
     existing_gz_path = os.environ.get('GZ_SIM_RESOURCE_PATH', '')
     
-    gz_resource_paths = [install_dir, models_dir]
+    gz_resource_paths = [install_dir, piper_install_dir, models_dir, piper_src_dir]    
+
     if existing_gz_path:
         gz_resource_paths.append(existing_gz_path)
         
@@ -23,13 +32,6 @@ def generate_launch_description():
         name='GZ_SIM_RESOURCE_PATH',
         value=':'.join(gz_resource_paths)
     )
-
-    # # # 1. 动态设置 GZ 资源路径
-    # install_dir = os.path.dirname(pkg_scout_description)
-    # set_gz_resource_path = SetEnvironmentVariable(
-    #     name='GZ_SIM_RESOURCE_PATH',
-    #     value=[install_dir]
-    # )
 
     # 2. XACRO 文件路径与解析
     xacro_file = os.path.join(pkg_scout_description, 'urdf', 'scout_mini.urdf.xacro')
@@ -44,12 +46,6 @@ def generate_launch_description():
     rviz_config_file = os.path.join(pkg_scout_description, 'rviz', 'urdf_config.rviz')
 
     # # 4. 启动 Gazebo Sim
-    # gazebo = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource(
-    #         os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')
-    #     ),
-    #     launch_arguments={'gz_args': '-r empty.sdf'}.items(),
-    # )
 
     # 4. 启动 Gazebo Sim，加载 house.world
     gazebo = IncludeLaunchDescription(
@@ -81,11 +77,27 @@ def generate_launch_description():
         parameters=[{'robot_description': robot_desc}]
     )
 
-    joint_state_publisher_gui_node = Node(
-        package='joint_state_publisher_gui',
-        executable='joint_state_publisher_gui',
-        name='joint_state_publisher_gui'
-    )
+    # joint_state_publisher_gui_node = Node(
+    #     package='joint_state_publisher_gui',
+    #     executable='joint_state_publisher_gui',
+    #     name='joint_state_publisher_gui'
+    # )
+
+    # # 1. 加载 joint_state_broadcaster
+    # joint_state_broadcaster_spawner = Node(
+    #     package="controller_manager",
+    #     executable="spawner",
+    #     arguments=["joint_state_broadcaster", "--controller-manager", "/controller_manager"],
+    #     output="screen",
+    # )
+
+    # # 2. 加载 arm_controller (轨迹控制器)
+    # arm_controller_spawner = Node(
+    #     package="controller_manager",
+    #     executable="spawner",
+    #     arguments=["arm_controller", "--controller-manager", "/controller_manager"],
+    #     output="screen",
+    # )
 
 
     # 9. ROS 2 <-> Gazebo 桥接节点 (添加了 /joint_states 桥接，方便 RViz 同步关节状态)
@@ -116,5 +128,8 @@ def generate_launch_description():
         spawn_entity,
         robot_state_publisher,
         bridge,
+        # joint_state_publisher_gui_node,
+        # joint_state_broadcaster_spawner,
+        # arm_controller_spawner,
         rviz_node
     ])

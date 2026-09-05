@@ -34,4 +34,6 @@
             <right_joint>rear_right_wheel</right_joint>
         </plugin> 
     </gazebo>
+
+
 </robot>

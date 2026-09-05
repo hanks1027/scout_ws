@@ -1,10 +1,9 @@
-
+# ==================== 原有底盘与基础配置 ====================
 - ros_topic_name: "/clock"
   gz_topic_name: "/clock"
   ros_type_name: "rosgraph_msgs/msg/Clock"
   gz_type_name: "gz.msgs.Clock"
   direction: GZ_TO_ROS
-
 
 - ros_topic_name: "/joint_states"
   gz_topic_name: "/world/empty/model/scout_mini/joint_state"
@@ -30,3 +29,39 @@
   gz_type_name: "gz.msgs.Odometry"
   direction: GZ_TO_ROS
 
+# ==================== 机械臂 6 个关节控制配置 (ROS -> Gazebo) ====================
+- ros_topic_name: "/arm/joint1/cmd_pos"
+  gz_topic_name: "/arm/joint1/cmd_pos"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+- ros_topic_name: "/arm/joint2/cmd_pos"
+  gz_topic_name: "/arm/joint2/cmd_pos"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+- ros_topic_name: "/arm/joint3/cmd_pos"
+  gz_topic_name: "/arm/joint3/cmd_pos"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+- ros_topic_name: "/arm/joint4/cmd_pos"
+  gz_topic_name: "/arm/joint4/cmd_pos"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+- ros_topic_name: "/arm/joint5/cmd_pos"
+  gz_topic_name: "/arm/joint5/cmd_pos"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+- ros_topic_name: "/arm/joint6/cmd_pos"
+  gz_topic_name: "/arm/joint6/cmd_pos"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ

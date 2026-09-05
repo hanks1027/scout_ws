@@ -1,0 +1,33 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    # 1. 关节状态广播器 (负责发布 /joint_states)
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    # 2. 机械臂轨迹控制器 (为 MoveIt 提供标准的接口)
+    arm_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+arm_controller:
+  ros__parameters:
+    joints:
+      - joint1
+      - joint2
+      - joint3
+      - joint4
+      - joint5
+      - joint6
+
+    command_interfaces:
+      - position
+
+    state_interfaces:
+      - position
+      - velocity
+
+    # 设置每个关节的 PID / 限制参数（可选，确保运动平滑）
+    state_publish_rate: 50.0
+    action_monitor_rate: 20.0
+    allow_partial_joints_goal: false

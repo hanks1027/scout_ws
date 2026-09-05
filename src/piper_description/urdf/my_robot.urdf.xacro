@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<robot name="my_robot" xmlns:xacro="https://www.ros.org/wiki/xacro">
+    <xacro:include filename="common_properties.xacro" />
+    <xacro:include filename="arm.xacro" />
+    <xacro:include filename="gripper.xacro" />
+    <xacro:include filename="my_robot.ros2_control.xacro" />
+
+
+
+    <joint 
+        name="gripper_base_joint"
+        type="fixed">
+        <parent 
+            link="tool_link" />
+        <child 
+            link="gripper_base" />
+        <origin 
+            xyz="0 0 0" rpy="0 1.5707963 0"/>
+        <dynamics damping="2.0" friction="0.2" />
+            
+    </joint>     
+
+</robot>

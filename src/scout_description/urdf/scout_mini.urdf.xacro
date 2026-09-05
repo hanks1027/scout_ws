@@ -5,7 +5,20 @@
 
     <xacro:include filename="common_properties.xacro" />
     <xacro:include filename="chassis.xacro" />
+    <xacro:include filename="/home/hanks/scout_ws/src/piper_description/urdf/my_robot.urdf.xacro" />
+
     <xacro:include filename="exp_in_sim.xacro" />
+
+    <joint 
+        name="piper_base_joint"
+        type="fixed">
+        <parent 
+            link="arm_link" />
+        <child 
+            link="piper_base_link" />
+        <origin 
+            xyz="0 0 0" rpy="0 0 0"/>            
+    </joint>  
 
 
 </robot>

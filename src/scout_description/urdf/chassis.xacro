@@ -117,6 +117,16 @@
         </collision>
     </link>
 
+    <link name="arm_link" />
+
+    <joint
+        name="arm_joint" type="fixed">
+        <origin xyz="0.06232 0 0.24623" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="arm_link" />
+    </joint>
+
+
     <joint name="laser_joint" type="fixed">
         <origin xyz="0.21837 0 0.21508" rpy="0 0 0" />
         <parent link="base_link" />

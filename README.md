@@ -55,6 +55,9 @@ ros2 launch scout_description gazebo.launch.py
 ## 发布速度
 ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.5, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
 
+## 图形化界面控制
+python3 scout_gui_control.py
+
 ## 6.fastlio2建图 (已兼容ROS2 jazzy&mid360s)
 分别在两个终端输入命令
 ####  终端 1：启动mid360s节点

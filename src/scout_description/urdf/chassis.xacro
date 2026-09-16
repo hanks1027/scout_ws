@@ -72,8 +72,8 @@
 
                 </geometry>
             </collision>
-
         </link>
+
     </xacro:macro>
 
     <xacro:wheel_link prefix="front_left"/>
@@ -81,7 +81,7 @@
     <xacro:wheel_link prefix="front_right"/>
     <xacro:wheel_link prefix="rear_right"/>
 
-     <link name="laser_link">
+     <link name="mid360_link">
         <inertial>
             <origin
                 xyz="0.0 0.0 0.0"
@@ -118,6 +118,24 @@
     </link>
 
     <link name="arm_link" />
+    <link name="laser_link"/>
+
+    <!-- ==================== 新增：IMU 节点与物理连接 ==================== -->
+    <link name="imu_link">
+        <inertial>
+            <mass value="0.01"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001"/>
+        </inertial>
+    </link>
+
+    <!-- =================================================================== -->
+
+    <joint name="laser_link_alias_joint" type="fixed">
+        <parent link="mid360_link"/>
+        <child link="laser_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
 
     <joint
         name="arm_joint" type="fixed">
@@ -127,12 +145,17 @@
     </joint>
 
 
-    <joint name="laser_joint" type="fixed">
+    <joint name="mid360_joint" type="fixed">
         <origin xyz="0.21837 0 0.21508" rpy="0 0 0" />
         <parent link="base_link" />
-        <child link="laser_link" />
+        <child link="mid360_link" />
     </joint>
 
+    <joint name="imu_joint" type="fixed">
+        <parent link="mid360_link"/>
+        <child link="imu_link"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+    </joint>
 
     <joint name="inertial_joint" type="fixed">
         <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -173,5 +196,50 @@
         <origin rpy="${pi / 2.0} 0 0" xyz="-${wheelbase / 2} -${track / 2} ${wheel_vertical_offset}"/>
         <axis rpy="0 0 0" xyz="0 0 -1"/>
     </joint>
+
+    <gazebo reference="mid360_joint">
+        <disableFixedJointLumping>true</disableFixedJointLumping>
+    </gazebo>
+
+    <!-- ==================== 新增：Gazebo IMU 仿真传感器配置 ==================== -->
+    <gazebo reference="imu_link">
+        <sensor name="imu_sensor" type="imu">
+            <always_on>true</always_on>
+            <update_rate>200</update_rate>
+            <topic>/livox/imu</topic>
+            <!-- 核心修改点：显式覆盖 frame_id 为 TF 树中存在的 link 名 -->
+            <gz_frame_id>imu_link</gz_frame_id>
+            <ignition_frame_id>imu_link</ignition_frame_id>
+            <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu"/>
+        </sensor>
+    </gazebo>
+
+    <gazebo reference="front_left_wheel">
+        <mu1>5.0</mu1>
+        <mu2>5.0</mu2>
+    </gazebo>
+    <gazebo reference="rear_left_wheel">
+        <mu1>5.0</mu1>
+        <mu2>5.0</mu2>
+    </gazebo>
+    <gazebo reference="front_right_wheel">
+        <mu1>5.0</mu1>
+        <mu2>5.0</mu2>
+    </gazebo>
+    <gazebo reference="rear_right_wheel">
+        <mu1>5.0</mu1>
+        <mu2>5.0</mu2>
+    </gazebo>
+
+    <xacro:include
+        filename="$(find livox_mid360_gz_sim)/urdf/mid360_gz_plugin.xacro"/>
+
+    <xacro:livox_mid360_gz_plugin
+        link_name="mid360_link"
+        node_name="livox_mid360_gz_sim"
+        frame_id="laser_link"
+        topic="/livox/lidar"
+        points_topic="/livox/lidar/points"
+        update_rate="10.0"/>
 
 </robot>

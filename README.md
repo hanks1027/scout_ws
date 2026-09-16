@@ -66,6 +66,13 @@ ros2 launch livox_ros_driver2 msg_MID360s_launch.py
 #### 终端 2：启动FASTLIO节点
 ros2 launch fast_lio mapping.launch.py 
 
+### 保存2d地图
+ros2 run nav2_map_server map_saver_cli -f /home/hanks/scout_ws/src/map/mymap2
+
+### 启动FAST-LIO2+NAV2导航脚本
+sh start_mapping.sh
+
+
 ---
 ### 💡 上传仓库命令：
 git add . && git commit -m "日常代码与文档更新" && git push

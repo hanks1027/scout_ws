@@ -55,6 +55,8 @@ def generate_launch_description():
         launch_arguments={'gz_args': f'-r {world_file}'}.items(),
     )
 
+
+
     # 5. 在 Gazebo 中生成模型
     spawn_entity = Node(
         package='ros_gz_sim',
@@ -62,8 +64,8 @@ def generate_launch_description():
         arguments=[
             '-string', robot_desc,
             '-name', 'scout_mini',
-            '-x', '2.0',   # 避开中央密集家具
-            '-y', '0.0',
+            '-x', '-3.5',   # 避开中央密集家具
+            '-y', '-3.5',
             '-z', '1.0'    # 从 1 米高度落下
         ],
         output='screen'

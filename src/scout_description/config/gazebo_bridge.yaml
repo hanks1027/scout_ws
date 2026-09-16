@@ -65,3 +65,10 @@
   ros_type_name: "std_msgs/msg/Float64"
   gz_type_name: "gz.msgs.Double"
   direction: ROS_TO_GZ
+
+# ==================== 传感器配置 (Gazebo -> ROS) ====================
+- ros_topic_name: "/livox/imu"
+  gz_topic_name: "/livox/imu"
+  ros_type_name: "sensor_msgs/msg/Imu"
+  gz_type_name: "gz.msgs.IMU"
+  direction: GZ_TO_ROS

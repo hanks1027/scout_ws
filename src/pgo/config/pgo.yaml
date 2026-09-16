@@ -1,0 +1,19 @@
+# --- 坐标系与话题 ---
+cloud_topic: /cloud_registered
+odom_topic: /Odometry
+map_frame: odom                # 改动：建议设为全局 map 帧（若系统有要求也可保持原样）
+local_frame: camera_init          # Fast-LIO 的前端原点帧
+
+
+# 如果你的 PGO 源码支持以下参数，建议加上：
+# icp_max_correspondence_distance: 2.5
+
+
+key_pose_delta_deg: 5
+key_pose_delta_trans: 0.2
+loop_search_radius: 1.0
+loop_time_tresh: 30.0
+loop_score_tresh: 0.15
+loop_submap_half_range: 5
+submap_resolution: 0.1
+min_loop_detect_duration: 3.0

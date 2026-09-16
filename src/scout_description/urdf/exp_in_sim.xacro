@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
+
     
     <gazebo>
         <plugin
             filename="gz-sim-diff-drive-system"
             name="gz::sim::systems::DiffDrive">
+            <wheels_per_side>2</wheels_per_side>
         <!-- 轮子关节名称 (需与你的 URDF 中的 joint 名一致) -->
             <left_joint>front_left_wheel</left_joint>
             <left_joint>rear_left_wheel</left_joint>
@@ -12,7 +14,8 @@
             <right_joint>rear_right_wheel</right_joint>
 
             <!-- 轮距与轮径 -->
-            <wheel_separation>0.4</wheel_separation>
+
+            <wheel_separation>0.49</wheel_separation>
             <wheel_radius>0.08</wheel_radius>
 
             <!-- 话题配置 -->
@@ -34,6 +37,5 @@
             <right_joint>rear_right_wheel</right_joint>
         </plugin> 
     </gazebo>
-
 
 </robot>

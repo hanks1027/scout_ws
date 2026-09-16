@@ -3,8 +3,8 @@
         feature_extract_enable: false
         point_filter_num: 3
         max_iteration: 3
-        filter_size_surf: 0.4
-        filter_size_map: 0.4
+        filter_size_surf: 0.5
+        filter_size_map: 0.5
         cube_side_length: 1000.0
         runtime_pos_log_enable: false
         map_file_path: "./test.pcd"
@@ -19,13 +19,13 @@
         preprocess:
             lidar_type: 1                # 1 代表 Livox 系列激光雷达
             scan_line:  4
-            blind: 0.2                   # Mid-360S 近距离盲区最小可达 0.1~0.2 米
+            blind: 0.5                   # Mid-360S 近距离盲区最小可达 0.1~0.2 米
             timestamp_unit: 0            # 0 代表纳秒 (ns)，适配 livox_ros_driver2 默认输出
             scan_rate: 10
 
         mapping:
-            acc_cov: 0.01                # 加速度计协方差（根据 Mid-360S 高精度 IMU 优化）
-            gyr_cov: 0.01                # 陀螺仪协方差
+            acc_cov: 0.1                # 加速度计协方差（根据 Mid-360S 高精度 IMU 优化）
+            gyr_cov: 0.1                # 陀螺仪协方差
             b_acc_cov: 0.0001            # 加速度计零偏漂移
             b_gyr_cov: 0.0001            # 陀螺仪零偏漂移
             fov_degree:    360.0         # 视场角

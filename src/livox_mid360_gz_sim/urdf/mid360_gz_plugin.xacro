@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="livox_mid360_gz_sim_default_csv"
+                  value="$(find livox_mid360_gz_sim)/config/mid360-real-centr.csv"/>
+  <xacro:macro name="livox_mid360_gz_plugin" params="
+      link_name:=mid360_link
+      node_name:=livox_mid360_gz_sim
+      frame_id:=laser_link
+      topic:=/livox/lidar
+      points_topic:=/livox/lidar/points
+      ground_truth_points_topic:=/ground_truth/livox/points
+      ground_truth_odom_topic:=/ground_truth/odometry
+      ground_truth_frame_id:=camera_init
+      enable_ground_truth:=true
+      csv_file_name:=${livox_mid360_gz_sim_default_csv}
+      samples:=20000
+      downsample:=1
+      update_rate:=10.0
+      min_range:=0.2
+      max_range:=50.0
+      noise_seed:=42
+      range_noise_stddev:=0.01
+      range_bias:=0.0
+      range_drift_per_second:=0.0002
+      dropout_rate:=0.01">
+    <gazebo>
+      <plugin filename="liblivox_mid360_gz_sim_plugin.so"
+              name="livox_mid360_gz_sim::LivoxMid360GzPlugin">
+        <link_name>${link_name}</link_name>
+        <node_name>${node_name}</node_name>
+        <frame_id>${frame_id}</frame_id>
+        <topic>${topic}</topic>
+        <points_topic>${points_topic}</points_topic>
+        <ground_truth_points_topic>${ground_truth_points_topic}</ground_truth_points_topic>
+        <ground_truth_odom_topic>${ground_truth_odom_topic}</ground_truth_odom_topic>
+        <ground_truth_frame_id>${ground_truth_frame_id}</ground_truth_frame_id>
+        <enable_ground_truth>${enable_ground_truth}</enable_ground_truth>
+        <csv_file_name>${csv_file_name}</csv_file_name>
+        <samples>${samples}</samples>
+        <downsample>${downsample}</downsample>
+        <update_rate>${update_rate}</update_rate>
+        <min_range>${min_range}</min_range>
+        <max_range>${max_range}</max_range>
+        <noise_seed>${noise_seed}</noise_seed>
+        <range_noise_stddev>${range_noise_stddev}</range_noise_stddev>
+        <range_bias>${range_bias}</range_bias>
+        <range_drift_per_second>${range_drift_per_second}</range_drift_per_second>
+        <dropout_rate>${dropout_rate}</dropout_rate>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+</robot>

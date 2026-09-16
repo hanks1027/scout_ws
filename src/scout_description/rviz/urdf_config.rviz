@@ -14,6 +14,8 @@ Panels:
         - /Odometry1/Covariance1
         - /TF2
         - /TF2/Frames1
+        - /PointCloud21
+        - /PointCloud21/Topic1
       Splitter Ratio: 0.5
     Tree Height: 715
   - Class: rviz_common/Selection
@@ -73,6 +75,10 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        arm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         base_footprint:
           Alpha: 1
           Show Axes: false
@@ -92,11 +98,69 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        gripper_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        imu_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         inertial_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
         laser_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        link1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link4:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link5:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link6:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link7:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link8:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        mid360_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        piper_base_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -111,6 +175,10 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        tool_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
       Mass Properties:
         Inertia: false
         Mass: false
@@ -126,6 +194,8 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        arm_link:
+          Value: true
         base_footprint:
           Value: true
         base_link:
@@ -134,13 +204,41 @@ Visualization Manager:
           Value: true
         front_right_wheel_link:
           Value: true
+        gripper_base:
+          Value: true
+        imu_link:
+          Value: true
         inertial_link:
           Value: true
         laser_link:
           Value: true
+        link1:
+          Value: true
+        link2:
+          Value: true
+        link3:
+          Value: true
+        link4:
+          Value: true
+        link5:
+          Value: true
+        link6:
+          Value: true
+        link7:
+          Value: true
+        link8:
+          Value: true
+        mid360_link:
+          Value: true
+        odom:
+          Value: true
+        piper_base_link:
+          Value: true
         rear_left_wheel_link:
           Value: true
         rear_right_wheel_link:
+          Value: true
+        tool_link:
           Value: true
       Marker Scale: 1
       Name: TF
@@ -150,18 +248,37 @@ Visualization Manager:
       Tree:
         base_footprint:
           base_link:
+            arm_link:
+              piper_base_link:
+                link1:
+                  link2:
+                    link3:
+                      link4:
+                        link5:
+                          link6:
+                            tool_link:
+                              gripper_base:
+                                link7:
+                                  {}
+                                link8:
+                                  {}
             front_left_wheel_link:
               {}
             front_right_wheel_link:
               {}
             inertial_link:
               {}
-            laser_link:
-              {}
+            mid360_link:
+              imu_link:
+                {}
+              laser_link:
+                {}
             rear_left_wheel_link:
               {}
             rear_right_wheel_link:
               {}
+        odom:
+          {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -272,6 +389,8 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        arm_link:
+          Value: true
         base_footprint:
           Value: true
         base_link:
@@ -280,13 +399,41 @@ Visualization Manager:
           Value: true
         front_right_wheel_link:
           Value: true
+        gripper_base:
+          Value: true
+        imu_link:
+          Value: true
         inertial_link:
           Value: true
         laser_link:
           Value: true
+        link1:
+          Value: true
+        link2:
+          Value: true
+        link3:
+          Value: true
+        link4:
+          Value: true
+        link5:
+          Value: true
+        link6:
+          Value: true
+        link7:
+          Value: true
+        link8:
+          Value: true
+        mid360_link:
+          Value: true
+        odom:
+          Value: true
+        piper_base_link:
+          Value: true
         rear_left_wheel_link:
           Value: true
         rear_right_wheel_link:
+          Value: true
+        tool_link:
           Value: true
       Marker Scale: 1
       Name: TF
@@ -296,38 +443,57 @@ Visualization Manager:
       Tree:
         base_footprint:
           base_link:
+            arm_link:
+              piper_base_link:
+                link1:
+                  link2:
+                    link3:
+                      link4:
+                        link5:
+                          link6:
+                            tool_link:
+                              gripper_base:
+                                link7:
+                                  {}
+                                link8:
+                                  {}
             front_left_wheel_link:
               {}
             front_right_wheel_link:
               {}
             inertial_link:
               {}
-            laser_link:
-              {}
+            mid360_link:
+              imu_link:
+                {}
+              laser_link:
+                {}
             rear_left_wheel_link:
               {}
             rear_right_wheel_link:
               {}
+        odom:
+          {}
       Update Interval: 0
       Value: true
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
+        Max Value: 2.013162136077881
+        Min Value: -0.008575022220611572
         Value: true
       Axis: Z
       Channel Name: intensity
       Class: rviz_default_plugins/PointCloud2
       Color: 255; 255; 255
-      Color Transformer: Intensity
+      Color Transformer: AxisColor
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 169
+      Max Intensity: 100
       Min Color: 0; 0; 0
-      Min Intensity: 0
+      Min Intensity: 100
       Name: PointCloud2
       Position Transformer: XYZ
       Selectable: true
@@ -338,11 +504,39 @@ Visualization Manager:
         Depth: 5
         Durability Policy: Volatile
         History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /livox/lidar
+        Reliability Policy: Best Effort
+        Value: /livox/lidar/points
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Acceleration properties:
+        Acc. vector alpha: 1
+        Acc. vector color: 255; 0; 0
+        Acc. vector scale: 1
+        Derotate acceleration: true
+        Enable acceleration: false
+      Axes properties:
+        Axes scale: 1
+        Enable axes: true
+      Box properties:
+        Box alpha: 1
+        Box color: 255; 0; 0
+        Enable box: false
+        x_scale: 1
+        y_scale: 1
+        z_scale: 1
+      Class: rviz_imu_plugin/Imu
+      Enabled: true
+      Name: Imu
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /livox/imu
+      Value: true
+      fixed_frame_orientation: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -389,7 +583,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 7.8529181480407715
+      Distance: 3.667509078979492
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -404,10 +598,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.8303979635238647
+      Pitch: 1.1403976678848267
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.6903932094573975
+      Yaw: 3.0103976726531982
     Saved: ~
 Window Geometry:
   Displays:
@@ -425,5 +619,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1410
-  X: 712
-  Y: 296
+  X: 527
+  Y: 239

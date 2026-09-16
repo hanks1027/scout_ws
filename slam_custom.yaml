@@ -1,0 +1,25 @@
+slam_toolbox:
+  ros__parameters:
+    # 核心坐标系与话题匹配
+    odom_frame: camera_init
+    map_frame: camera_init
+    base_frame: body        # 你的机器人底盘坐标系
+    scan_topic: /scan            # 转换后的 2D 雷达话题
+
+    use_odom_tf: true 
+
+    # 算法与模式设置
+    mode: mapping
+    debug_logging: false
+    throttle_scans: 1
+    transform_publish_period: 0.02
+    map_update_interval: 1.0
+
+    # 提升 TF 容忍度，防止时间戳不完全同步时计算位姿失败
+    transform_timeout: 0.5
+    tf_buffer_duration: 30.0
+
+    # 传感器有效测量范围
+    min_laser_range: 0.2
+    max_laser_range: 20.0
+    minimum_time_interval: 0.05

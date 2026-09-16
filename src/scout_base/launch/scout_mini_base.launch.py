@@ -15,11 +15,11 @@ def generate_launch_description():
 
     port_name_arg = DeclareLaunchArgument('port_name', default_value='can0',
                                          description='CAN bus name, e.g. can0')
-    odom_frame_arg = DeclareLaunchArgument('odom_frame', default_value='odom',
+    odom_frame_arg = DeclareLaunchArgument('odom_frame', default_value='wheel_odom',
                                            description='Odometry frame id')
-    base_link_frame_arg = DeclareLaunchArgument('base_frame', default_value='base_link',
+    base_link_frame_arg = DeclareLaunchArgument('base_frame', default_value='wheel_base_link',
                                                 description='Base link frame id')
-    odom_topic_arg = DeclareLaunchArgument('odom_topic_name', default_value='odom',
+    odom_topic_arg = DeclareLaunchArgument('odom_topic_name', default_value='wheel_odom',
                                            description='Odometry topic name')
 
     is_scout_mini_arg = DeclareLaunchArgument('is_scout_mini', default_value='true',
@@ -47,6 +47,7 @@ def generate_launch_description():
                 'is_omni_wheel': launch.substitutions.LaunchConfiguration('is_omni_wheel'),
                 'simulated_robot': launch.substitutions.LaunchConfiguration('simulated_robot'),
                 'control_rate': launch.substitutions.LaunchConfiguration('control_rate'),
+                'pub_tf': False,                 # 如果节点支持，直接关闭 TF 广播是最干净的做法
         }])
 
     return LaunchDescription([

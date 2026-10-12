@@ -1,0 +1,7 @@
+free_thresh: 0.196
+image: /home/hanks/scout_ws/src/map/mymap3.pgm
+negate: 0
+occupied_thresh: 0.65
+origin: [-35.80319595336914, -116.63397817611695, 0.0]
+resolution: 0.05
+mode: trinary

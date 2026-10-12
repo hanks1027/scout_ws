@@ -81,7 +81,7 @@
     <xacro:wheel_link prefix="front_right"/>
     <xacro:wheel_link prefix="rear_right"/>
 
-     <link name="mid360_link">
+     <link name="lidar_link">
         <inertial>
             <origin
                 xyz="0.0 0.0 0.0"
@@ -132,7 +132,7 @@
     <!-- =================================================================== -->
 
     <joint name="laser_link_alias_joint" type="fixed">
-        <parent link="mid360_link"/>
+        <parent link="lidar_link"/>
         <child link="laser_link"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
     </joint>
@@ -148,11 +148,11 @@
     <joint name="mid360_joint" type="fixed">
         <origin xyz="0.21837 0 0.21508" rpy="0 0 0" />
         <parent link="base_link" />
-        <child link="mid360_link" />
+        <child link="lidar_link" />
     </joint>
 
     <joint name="imu_joint" type="fixed">
-        <parent link="mid360_link"/>
+        <parent link="lidar_link"/>
         <child link="imu_link"/>
         <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
     </joint>
@@ -235,7 +235,7 @@
         filename="$(find livox_mid360_gz_sim)/urdf/mid360_gz_plugin.xacro"/>
 
     <xacro:livox_mid360_gz_plugin
-        link_name="mid360_link"
+        link_name="lidar_link"
         node_name="livox_mid360_gz_sim"
         frame_id="laser_link"
         topic="/livox/lidar"

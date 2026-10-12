@@ -23,14 +23,21 @@
   <!-- ROS 2 构建工具 -->
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <!-- 运行时依赖项（替代 ROS 1 的 run_depend） -->
+  <!-- C++ 节点编译与运行时依赖 -->
+  <depend>rclcpp</depend>
+  <depend>tf2_ros</depend>
+  <depend>geometry_msgs</depend>
+  <depend>visualization_msgs</depend>
+  <depend>urdf</depend>
+  <depend>libopencv-dev</depend>
+
+  <!-- 运行时依赖项 -->
   <exec_depend>joint_state_publisher</exec_depend>
   <exec_depend>joint_state_publisher_gui</exec_depend>
   <exec_depend>robot_state_publisher</exec_depend>
   <exec_depend>ros_gz_sim</exec_depend>
   <exec_depend>ros_gz_bridge</exec_depend>  
   <exec_depend>rviz2</exec_depend>
-  <exec_depend>urdf</exec_depend>
   <exec_depend>xacro</exec_depend>
 
   <export>

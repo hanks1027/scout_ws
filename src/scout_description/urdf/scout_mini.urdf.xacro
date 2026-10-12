@@ -7,7 +7,7 @@
     <xacro:include filename="chassis.xacro" />
     <xacro:include filename="/home/hanks/scout_ws/src/piper_description/urdf/my_robot.urdf.xacro" />
 
-    <xacro:include filename="exp_in_sim.xacro" />
+    <!-- <xacro:include filename="exp_in_sim.xacro" /> -->
 
     <joint 
         name="piper_base_joint"

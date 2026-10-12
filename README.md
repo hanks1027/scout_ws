@@ -1,6 +1,6 @@
-# Scout Mini ROS 2 项目指南
+# Four-Wheel Differential Chassis Navigation Planner（Still Updating‌）
 
-本项目是基于 **ROS 2 Jazzy**（Ubuntu 24.04）开发的 **Scout Mini 移动机器人** 开源部署框架。项目整合了 Scout Mini 底盘驱动与 CAN 通信、机器人 URDF 模型可视化、Gazebo 仿真环境搭建，并深度适配了 **Livox Mid-360S** 激光雷达。同时，项目对 **FAST_LIO2** 3D LiDAR-IMU 紧耦合激光里程计与建图算法进行了 ROS 2 Jazzy 版本的编译适配与调优，提供了一套从硬件通信、实机遥控到高精度 3D SLAM 建图的一站式保姆级部署指南。 
+本项目是基于 ROS 2 Jazzy（Ubuntu 24.04）开发的 Scout Mini 移动机器人 高性能开源部署与导航框架。项目整合了底盘驱动与 CAN 通信、机器人 URDF 模型可视化、Gazebo 仿真环境搭建，并深度适配了 Livox Mid-360S 激光雷达。在此基础上，项目对 FAST-LIO2 3D LiDAR-IMU 紧耦合算法进行了深度移植与升级，创新性地集成了重力对齐、SC-PGO（Scan Context Pose Graph Optimization）回环检测以及地图重定位功能，优化原生算法长时间运行的累积漂移痛点，实现了高精度、高鲁棒性的 3D SLAM 建图。后端支持基于 Nav2 的 2D平面导航，并且融合了基于 Scan Planner 的 3D 空间路径规划与导航能力，使机器人在复杂多变的三维环境中具备出色的自主穿行与规划表现。
 
 ---
 
@@ -64,18 +64,32 @@ python3 scout_gui_control.py
 ros2 launch livox_ros_driver2 msg_MID360s_launch.py 
 
 #### 终端 2：启动FASTLIO节点
-ros2 launch fast_lio mapping.launch.py 
+ros2 launch fastlio2 lio_launch.py
+
+#### (或者)终端 2：启动FASTLIO+pgo回环检测节点（该回环检测在规则缺乏特征的场景下退化严重（如走廊），需要调参）
+ros2 launch pgo pgo_launch.py
+
+## 7.基于Nav2的2D平面导航一键启动脚本（需要自行修改脚本当中的地图文件路径）
+sh start_mapping.sh
 
 ### 保存2d地图
 ros2 run nav2_map_server map_saver_cli -f /home/hanks/scout_ws/src/map/mymap2
+os2 run nav2_map_server map_saver_cli -f ~/scout_ws/src/map/mymap3 --ros-args --remap map:=/projected_map -p map_subscribe_transient_local:=false
 
-### 启动FAST-LIO2+NAV2导航脚本
-sh start_mapping.sh
+
+### 启动scan planner规划器脚本
+sh slam.sh
 
 
 ---
 ### 💡 上传仓库命令：
 git add . && git commit -m "日常代码与文档更新" && git push
+
+## 致谢
+
+感谢如下开源项目作者：
+[SCAN-Planner](https://github.com/wuyi2121/SCAN-Planner) 
+[FASTLIO2](https://github.com/liangheming/FASTLIO2_ROS2)
 
 
 
